@@ -103,6 +103,11 @@ def message(sid, data):
     print('message from ', session['username'])
 
 
+@sio.event(namespace='/chat')
+def sms_event(sid, data):
+    pass
+
+
 @sio.on('my custom event', namespace='/chat')
 def my_custom_event(sid, event_data):
     print("\n my_custom_event sid: ", sid)
