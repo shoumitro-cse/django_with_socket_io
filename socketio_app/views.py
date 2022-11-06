@@ -113,9 +113,11 @@ def disconnect_request(sid):
 
 @sio.event
 def connect(sid, environ):
-    # sio.emit('my_response', {'data': 'Connected', 'count': 0}, room=sid)
     print("\nconnect sid: ", sid)
-    print()
+    # print(environ)
+    # username = authenticate_user(environ)
+    username = "shoumitro26"
+    sio.save_session(sid, {'username': username})
 
 
 @sio.event
@@ -141,10 +143,10 @@ def exit_chat(sid, room_id):
     print()
 
 
-# @sio.event
-# def my_response(sid, data):
-#    print("\nmy_response sid, data : ", sid, data)
-#    print()
+@sio.event
+def message(sid, data):
+    session = sio.get_session(sid)
+    print('message from ', session['username'])
 
 
 @sio.on('my custom event', namespace='/chat')

@@ -5,9 +5,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js"></script>
 <script>
-  {#const sio = io('http://localhost:8000');#}
+  const sio = io('http://localhost:8000');
   {#const sio = io('http://localhost:8000/test');#}
-  const sio = io('http://localhost:8000/chat');
+  {#const sio = io('http://localhost:8000/chat');#}
   console.log(sio)
   
    sio.on('connect', () => {
@@ -22,9 +22,13 @@
     	console.log(result);
   	});
 
-  	sio.emit('my custom event', {'data': 'my custom event data', 'room_id': room_id}, (result) => {
+  	sio.emit('message', {'data': 'Some sms daa', 'room_id': room_id}, (result) => {
     	console.log(result);
   	});
+
+  	{#sio.emit('my custom event', {'data': 'my custom event data', 'room_id': room_id}, (result) => {#}
+    	{#console.log(result);#}
+  	{#});#}
 
   });
 

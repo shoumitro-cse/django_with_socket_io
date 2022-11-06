@@ -30,3 +30,56 @@ pip uninstall eventlet
 pip install gunicorn==20.1.0
 pip install eventlet==0.30.2
 pip install https://github.com/eventlet/eventlet/archive/master.zip
+
+
+
+
+
+
+
+
+
+
+@sio.event
+def connect(sid, environ):
+    print("\nconnect sid: ", sid)
+    print(environ)
+
+
+{'wsgi.errors': <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7f4dd02da8e0>,
+'wsgi.version': (1, 0),
+'wsgi.multithread': True,
+'wsgi.multiprocess': False,
+'wsgi.run_once': False,
+'wsgi.file_wrapper': <class 'gunicorn.http.wsgi.FileWrapper'>,
+'wsgi.input_terminated': True,
+'SERVER_SOFTWARE': 'gunicorn/20.1.0',
+'wsgi.input': <gunicorn.http.body.Body object at 0x7f4dd02caa90>,
+'gunicorn.socket': <eventlet.greenio.base.GreenSocket object at 0x7f4dd0335d00>,
+'REQUEST_METHOD': 'GET',
+'QUERY_STRING': 'EIO=4&transport=polling&t=OHE2y14',
+'RAW_URI': '/socket.io/?EIO=4&transport=polling&t=OHE2y14',
+'SERVER_PROTOCOL': 'HTTP/1.1',
+'HTTP_HOST': 'localhost:8000',
+'HTTP_CONNECTION': 'keep-alive',
+'HTTP_SEC_CH_UA': '" Not;A Brand";v="99", "Google Chrome";v="97", "Chromium";v="97"',
+'HTTP_ACCEPT': '*/*',
+'HTTP_SEC_CH_UA_MOBILE': '?0',
+'HTTP_USER_AGENT': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36',
+'HTTP_SEC_CH_UA_PLATFORM': '"Linux"',
+'HTTP_SEC_FETCH_SITE': 'same-origin',
+'HTTP_SEC_FETCH_MODE': 'cors',
+'HTTP_SEC_FETCH_DEST': 'empty',
+'HTTP_REFERER': 'http://localhost:8000/index/',
+'HTTP_ACCEPT_ENCODING': 'gzip, deflate, br',
+'HTTP_ACCEPT_LANGUAGE': 'en-US,en;q=0.9,bn;q=0.8',
+'HTTP_COOKIE': 'csrftoken=GAFeCtvQxxBMouW7ZmR5TsE6CH3eWcDO; sessionid=1zcx61dmjf27penqb2s0lygpasndxy5m',
+'wsgi.url_scheme': 'http',
+'REMOTE_ADDR': '127.0.0.1',
+'REMOTE_PORT': '44740',
+'SERVER_NAME': '127.0.0.1',
+'SERVER_PORT': '8000',
+'PATH_INFO': '/socket.io/',
+'SCRIPT_NAME': '',
+'eventlet.input': <engineio.middleware.WSGIApp.__call__.<locals>.Input object at 0x7f4dd02ca9a0>
+}
