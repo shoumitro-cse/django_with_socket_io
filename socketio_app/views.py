@@ -117,12 +117,27 @@ def my_custom_event(sid, event_data):
 class MyCustomNamespace(socketio.Namespace):
     def on_connect(self, sid, environ):
         print("\n on_connect sid: ", sid)
+        # username = authenticate_user(environ)
+        self.save_session(sid, {'username': "shoumitro26"})
 
     def on_disconnect(self, sid):
         print("\n on_disconnect sid: ", sid)
 
+    def on_begin_chat(self, sid, room_id):
+        self.enter_room(sid, room_id)
+
+    def on_exit_chat(self, sid, room_id):
+        self.leave_room(sid, room_id)
+
+    def on_message(self, sid, event_data):
+        session = self.get_session(sid)
+        # print('message from ', session['username'])
+        self.emit('my_response', {'data': event_data, 'username': session['username']},
+                  room=event_data['room_id'])
+
     def on_my_event(self, sid, event_data):
-        self.emit('my_response', {'data': event_data['data']}, room=event_data['room_id'])
+        print("\n on_my_event data: ", event_data)
+        self.emit('my_response', {'data': event_data}, room=event_data['room_id'])
 
 
 # register namespace class

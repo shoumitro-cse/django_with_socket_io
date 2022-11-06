@@ -32,7 +32,8 @@ def my_response(data):
     print("\n\nmy_response data : ", data)
     
     
-sio.connect('http://localhost:8000')
+# sio.connect('http://localhost:8000')
+sio.connect('http://localhost:8000/test')
 sio.wait
 #sio.emit('my_response', {'foo': 'bar'})
 #sio.emit('begin_chat', 1234567)

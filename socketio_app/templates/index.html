@@ -5,8 +5,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js"></script>
 <script>
-  const sio = io('http://localhost:8000');
-  {#const sio = io('http://localhost:8000/test');#}
+  {#const sio = io('http://localhost:8000');#}
+  const sio = io('http://localhost:8000/test');
   {#const sio = io('http://localhost:8000/chat');#}
   console.log(sio)
   
@@ -14,21 +14,21 @@
     console.log('connected');
     let room_id = 1234567;
 
-    sio.emit('begin_chat', room_id, (result) => {
+     sio.emit('begin_chat', room_id, (result) => {
     	console.log(result);
   	});
 
-  	sio.emit('my_event', {'data': 'Some sms daa', 'room_id': room_id}, (result) => {
+  	sio.emit('my_event', {'data': 'send my event data', 'room_id': room_id}, (result) => {
+    	console.log('my_event send');
+  	});
+
+  	sio.emit('message', {'data': 'for message method data', 'room_id': room_id}, (result) => {
     	console.log(result);
   	});
 
-  	sio.emit('message', {'data': 'Some sms daa', 'room_id': room_id}, (result) => {
-    	console.log(result);
-  	});
-
-  	{#sio.emit('my custom event', {'data': 'my custom event data', 'room_id': room_id}, (result) => {#}
-    	{#console.log(result);#}
-  	{#});#}
+  	//sio.emit('my custom event', {'data': 'my custom event data', 'room_id': room_id}, (result) => {
+    //	console.log(result);
+  	//});
 
   });
 
