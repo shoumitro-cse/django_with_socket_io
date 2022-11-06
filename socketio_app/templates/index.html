@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Socket.IO using Python,JavaScript</h2>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js"></script>
+<script>
+  //const sio = io('http://localhost:8000');
+  const sio = io('http://localhost:8000/test');
+  console.log(sio)
+  
+   sio.on('connect', () => {
+    console.log('connected');
+    let room_id = 1234567;
+    sio.emit('begin_chat', room_id, (result) => {
+    	console.log(result);
+  	});
+  	sio.emit('my_event', {'data': 'Some sms daa', 'room_id': room_id}, (result) => {
+    	console.log(result);
+  	});
+  });
+
+  sio.on("my_response", (data) => {
+	  console.log(data);
+  });
+
+  sio.on('disconnect', () => {
+    console.log('disconnected');
+  });
+</script>
+
+</body>
+</html> 
+
