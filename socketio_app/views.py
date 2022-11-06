@@ -125,4 +125,5 @@ class MyCustomNamespace(socketio.Namespace):
         self.emit('my_response', {'data': event_data['data']}, room=event_data['room_id'])
 
 
+# register namespace class
 sio.register_namespace(MyCustomNamespace('/test'))
