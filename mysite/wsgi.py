@@ -21,4 +21,4 @@ static_files = {
 
 #application = get_wsgi_application()
 django_app = get_wsgi_application()
-application = socketio.WSGIApp(sio, django_app, static_files)
+application = socketio.WSGIApp(socketio_app=sio, wsgi_app=django_app, static_files=static_files)
