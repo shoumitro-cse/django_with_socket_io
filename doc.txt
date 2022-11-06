@@ -32,11 +32,20 @@ pip install eventlet==0.30.2
 pip install https://github.com/eventlet/eventlet/archive/master.zip
 
 
+"""
+redis-> An in-memory database that persists on disk
+What is Redis? Redis, which stands for Remote Dictionary Server,
+is a fast, open source, in-memory, key-value data store.
+The project started when Salvatore Sanfilippo, the original developer of Redis,
+wanted to improve the scalability of his Italian startup.
+"""
+sudo pacman -S redis
+sudo systemctl start redis
+sudo systemctl restart redis
+sudo systemctl stop redis
 
-
-
-
-
+mgr = socketio.RedisManager('redis://')
+sio = socketio.Server(logger=True, async_mode=async_mode, client_manager=mgr)
 
 
 

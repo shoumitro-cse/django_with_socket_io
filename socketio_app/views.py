@@ -46,7 +46,8 @@ import socketio
 from django.shortcuts import get_object_or_404, render, redirect
 
 basedir = os.path.dirname(os.path.realpath(__file__))
-sio = socketio.Server(logger=True, async_mode=async_mode)
+mgr = socketio.RedisManager('redis://')
+sio = socketio.Server(logger=True, async_mode=async_mode, client_manager=mgr)
 thread = None
 
 
