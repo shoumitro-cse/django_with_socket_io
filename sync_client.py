@@ -10,7 +10,7 @@ class MyCustomNamespace(socketio.ClientNamespace):
         print('connection established')
 
     def on_disconnect(self):
-        print('disconnected')
+        print('disconnected from server')
 
     def on_my_response(self, data):
         print("\nmy_response data : ", data)
