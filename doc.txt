@@ -16,7 +16,7 @@ source ./env/bin/activate
 python -V
 
 pip install "python-socketio[client]"
-pip install gunicorn gevent-websocket eventlet
+pip install gunicorn==20.1.0 gevent-websocket eventlet==0.30.2 redis
 pip install https://github.com/eventlet/eventlet/archive/master.zip
 
 gunicorn --log-level INFO --thread 50 mysite.wsgi
