@@ -1,14 +1,32 @@
-# It just needs to install more packages here.
-# pip install gevent-websocket
-# pip install eventlet
-
-# pip install "python-socketio[client]"
-# pip install "python-socketio[asyncio_client]" # for asyncio
-
 import socketio
 
 sio = socketio.Client()
 room_id = 1234567
+
+
+class MyCustomNamespace(socketio.ClientNamespace):
+    def on_connect(self):
+        self.emit('begin_chat', room_id)
+        print('connection established')
+
+    def on_disconnect(self):
+        print('disconnected')
+
+    def on_my_response(self, data):
+        print("\nmy_response data : ", data)
+
+
+sio.register_namespace(MyCustomNamespace('/test'))
+
+sio.connect('http://localhost:8000', namespaces=['/test'])
+sio.wait
+
+
+
+
+
+
+
 
 
 # @sio.event
@@ -49,19 +67,3 @@ room_id = 1234567
 # sio.send("response")
 
 
-class MyCustomNamespace(socketio.ClientNamespace):
-    def on_connect(self):
-        self.emit('begin_chat', room_id)
-        print('connection established')
-
-    def on_disconnect(self):
-        print('disconnected')
-
-    def on_my_response(self, data):
-        print("\nmy_response data : ", data)
-
-
-sio.register_namespace(MyCustomNamespace('/test'))
-
-sio.connect('http://localhost:8000', namespaces=['/test'])
-sio.wait

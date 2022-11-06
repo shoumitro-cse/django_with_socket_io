@@ -7,7 +7,6 @@
 <script>
   {#const sio = io('http://localhost:8000');#}
   const sio = io('http://localhost:8000/test');
-  {#const sio = io('http://localhost:8000/chat');#}
   console.log(sio)
   
    sio.on('connect', () => {
