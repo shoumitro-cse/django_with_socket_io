@@ -5,8 +5,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.min.js"></script>
 <script>
-  //const sio = io('http://localhost:8000');
-  const sio = io('http://localhost:8000/test');
+  const sio = io('http://localhost:8000');
+  {#const sio = io('http://localhost:8000/test');#}
   console.log(sio)
   
    sio.on('connect', () => {
