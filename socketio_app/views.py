@@ -147,6 +147,12 @@ def exit_chat(sid, room_id):
 #    print()
 
 
+@sio.on('my custom event', namespace='/chat')
+def my_custom_event(sid, event_data):
+    print("\n my_custom_event sid: ", sid)
+    sio.emit('my_response', {'data': event_data['data']}, room=event_data['room_id'])
+
+
 class MyCustomNamespace(socketio.Namespace):
     def on_connect(self, sid, environ):
         print("\n on_connect sid: ", sid)
