@@ -1,57 +1,10 @@
-# https://python-socketio.readthedocs.io/en/latest/client.html
-# https://socket.io/docs/v4/client-api/
-
-
-# pip install --upgrade pip setuptools
-# gunicorn -k eventlet -w 1 mysite.wsgi
-
-"""
-/home/shoumitro/.pyenv/versions/3.8.12/bin/python -m venv env
-source ./env/bin/activate
-python -V
-
-pip install "python-socketio[client]"
-pip install gunicorn gevent-websocket eventlet
-pip install https://github.com/eventlet/eventlet/archive/master.zip
-
-gunicorn --log-level INFO --thread 50 mysite.wsgi
-gunicorn -w 1 --worker-class eventlet  mysite.wsgi
-gunicorn --worker-class eventlet -w 1 mysite.wsgi --reload
-
-# works fine
-gunicorn --worker-class eventlet -w 1 mysite.wsgi
-pip uninstall gunicorn
-pip uninstall eventlet
-pip install gunicorn==20.1.0
-pip install eventlet==0.30.2
-pip install https://github.com/eventlet/eventlet/archive/master.zip
-"""
-
-# for threading
-# gunicorn --log-level INFO --thread 50 mysite.wsgi
-
-# It just needs to install more packages here.
-# pip install gevent-websocket
-# pip install eventlet
-
-# set async_mode to 'threading', 'eventlet', 'gevent' or 'gevent_uwsgi' to
-# force a mode else, the best mode is selected automatically from what's
-# installed
-async_mode = 'eventlet'
-
-import os
-
-from django.http import HttpResponse
+from django.shortcuts import render
+from mysite.server import sio
 import socketio
-from django.shortcuts import get_object_or_404, render, redirect
-
-basedir = os.path.dirname(os.path.realpath(__file__))
-mgr = socketio.RedisManager('redis://')
-sio = socketio.Server(logger=True, async_mode=async_mode, client_manager=mgr)
-thread = None
 
 
 def index(request):
+    # thread = None
     # global thread
     # if thread is None:
     #    thread = sio.start_background_task(background_thread)
