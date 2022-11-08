@@ -26,11 +26,13 @@ class MyCustomNamespace(socketio.Namespace):
 
     def on_message(self, sid, event_data):
         session = self.get_session(sid)
+        print(session['username'])
+
         # connect to the redis queue as an external process
         external_sio = socketio.RedisManager('redis://', write_only=True)
         external_sio.emit('my_response', {'data': event_data, 'sio': 'RedisManager'}, room=event_data['room_id'])
         mgr.emit('my_response', {'data': event_data, 'sio': 'mgr'}, room=event_data['room_id'])
-        self.emit('my_response', {'data': event_data['data'], 'username': session['username']}, room=event_data['room_id'])
+        self.emit('my_response', {'data': event_data['data'],}, room=event_data['room_id'])
 
     def on_my_event(self, sid, event_data):
         """
