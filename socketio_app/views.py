@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mysite.server import sio, mgr
+from mysite.wsgi_server import sio, mgr
 import socketio
 
 

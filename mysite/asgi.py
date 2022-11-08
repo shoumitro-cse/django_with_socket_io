@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/howto/deployment/asgi/
 
 import os
 import socketio
-from mysite.server import asio
+from mysite.asgi_server import asio
 
 from django.core.asgi import get_asgi_application
 

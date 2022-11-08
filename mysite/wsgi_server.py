@@ -23,10 +23,3 @@ sio = socketio.Server(
     client_manager=mgr,
     # engineio_logger=True
 )
-
-asio = socketio.AsyncServer(
-    logger=True,
-    async_mode='asgi',
-    client_manager=mgr,
-    # engineio_logger=True
-)

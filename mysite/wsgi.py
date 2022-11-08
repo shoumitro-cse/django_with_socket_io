@@ -11,7 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 import socketio
-from mysite.server import sio
+from mysite.wsgi_server import sio
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 
