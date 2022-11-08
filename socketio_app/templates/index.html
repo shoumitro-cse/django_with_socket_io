@@ -10,20 +10,25 @@
   // console.log(sio)
   
    sio.on('connect', () => {
-    console.log('connected');
-    let room_id = 1234567;
 
-     sio.emit('begin_chat', room_id, (result) => {
-    	console.log("begin_chat send.");
-  	});
+       console.log('connected with socket.io');
 
-  	sio.emit('my_event', {'data': 'send my event data', 'room_id': room_id}, (result) => {
-    	console.log('my_event send....');
-  	});
+       let room_id = 1234567;
 
-  	sio.emit('message', {'data': 'for message method data', 'room_id': room_id}, (result) => {
-    	console.log("message send......");
-  	});
+       console.log('begin_chat sending....');
+       sio.emit('begin_chat', room_id, (result) => {
+            console.log("begin_chat has completed...");
+       });
+
+       console.log('message sending....');
+       sio.emit('message', {'data': 'for message method data', 'room_id': room_id}, (result) => {
+            console.log("message has completed......");
+       });
+
+       console.log('my_event sending....');
+       sio.emit('my_event', {'data': 'send my event data', 'room_id': room_id}, (result) => {
+           console.log('my_event has completed....');
+       });
 
   	//sio.emit('my custom event', {'data': 'my custom event data', 'room_id': room_id}, (result) => {
     //	console.log(result);
