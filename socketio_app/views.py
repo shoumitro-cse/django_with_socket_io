@@ -32,7 +32,7 @@ class MyCustomNamespace(socketio.Namespace):
         external_sio = socketio.RedisManager('redis://', write_only=True)
         external_sio.emit('my_response', {'data': event_data, 'sio': 'RedisManager'}, room=event_data['room_id'])
         mgr.emit('my_response', {'data': event_data, 'sio': 'mgr'}, room=event_data['room_id'])
-        self.emit('my_response', {'data': event_data['data'],}, room=event_data['room_id'])
+        self.emit('my_response', {'data': event_data,}, room=event_data['room_id'])
 
     def on_my_event(self, sid, event_data):
         """
@@ -71,7 +71,7 @@ def message(sid, event_data):
     external_sio = socketio.RedisManager('redis://', write_only=True)
     external_sio.emit('my_response', {'data': event_data, 'sio': 'RedisManager'}, room=event_data['room_id'])
     mgr.emit('my_response', {'data': event_data, 'sio': 'mgr'}, room=event_data['room_id'])
-    sio.emit('my_response', {'data': event_data['data']}, room=event_data['room_id'])
+    sio.emit('my_response', {'data': event_data}, room=event_data['room_id'])
 
 
 @sio.event
