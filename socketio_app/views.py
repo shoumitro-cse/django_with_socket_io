@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from mysite.server import sio
+from mysite.server import sio, mgr
 import socketio
 
 
@@ -27,12 +27,26 @@ class MyCustomNamespace(socketio.Namespace):
     def on_message(self, sid, event_data):
         session = self.get_session(sid)
         # print('message from ', session['username'])
+
         self.emit('my_response', {'data': event_data, 'username': session['username']},
                   room=event_data['room_id'])
 
+        # connect to the redis queue as an external process
+        external_sio = socketio.RedisManager('redis://', write_only=True)
+        external_sio.emit('my_response', {'data': event_data, 'username': session['username']},
+                          room=event_data['room_id'])
+        mgr.emit('my_response', {'data': event_data, 'username': session['username']},
+                 room=event_data['room_id'])
+
     def on_my_event(self, sid, event_data):
+        """
+        In chat applications it is often desired that an event is broadcasted
+        to all the members of the room except one, which is the originator of
+        the event such as a chat message. The socketio.Server.emit() method provides
+        an optional skip_sid argument to indicate a client that should be skipped during the broadcast.
+        """
         print("\n on_my_event data: ", event_data)
-        self.emit('my_response', {'data': event_data}, room=event_data['room_id'])
+        self.emit('my_response', {'data': event_data}, room=event_data['room_id'], skip_sid=sid)
 
 
 # register namespace class

@@ -1,7 +1,7 @@
 # run the project
 sudo systemctl start redis
 gunicorn --worker-class eventlet -w 1 mysite.wsgi --reload
-
+daphne -p 8001 mysite.asgi:application
 
 # documentations
 # https://python-socketio.readthedocs.io/en/latest/client.html

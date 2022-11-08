@@ -7,22 +7,22 @@
 <script>
   {#const sio = io('http://localhost:8000');#}
   const sio = io('http://localhost:8000/test');
-  console.log(sio)
+  // console.log(sio)
   
    sio.on('connect', () => {
     console.log('connected');
     let room_id = 1234567;
 
      sio.emit('begin_chat', room_id, (result) => {
-    	console.log(result);
+    	console.log("begin_chat send.");
   	});
 
   	sio.emit('my_event', {'data': 'send my event data', 'room_id': room_id}, (result) => {
-    	console.log('my_event send');
+    	console.log('my_event send....');
   	});
 
   	sio.emit('message', {'data': 'for message method data', 'room_id': room_id}, (result) => {
-    	console.log(result);
+    	console.log("message send......");
   	});
 
   	//sio.emit('my custom event', {'data': 'my custom event data', 'room_id': room_id}, (result) => {
