@@ -1,6 +1,7 @@
 # run the project
 sudo systemctl start redis
 gunicorn --worker-class eventlet -w 1 mysite.wsgi --reload
+gunicorn -k gevent -w 1 mysite.wsgi --reload
 daphne -p 8001 mysite.asgi:application
 
 # documentations
@@ -11,7 +12,7 @@ daphne -p 8001 mysite.asgi:application
 
 """
 # Install
-/home/shoumitro/.pyenv/versions/3.9.12/bin/python -m venv env
+/home/shoumitro/.pyenv/versions/3.9.12/bin/python -m venv venv
 source ./env/bin/activate
 python -V
 pip install "python-socketio[client]" gunicorn==20.1.0 gevent-websocket==0.10.1 eventlet==0.30.2 redis==4.3.4 Django==4.1.3
