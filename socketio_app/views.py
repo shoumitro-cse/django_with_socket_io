@@ -19,7 +19,7 @@ class MyCustomNamespace(socketio.Namespace):
 
     def on_begin_chat(self, sid, room_id):
         self.enter_room(sid, room_id)
-        print("room_id: ", room_id)
+        print("begin_chat room_id: ", room_id)
 
     def on_exit_chat(self, sid, room_id):
         self.leave_room(sid, room_id)
@@ -53,6 +53,42 @@ class MyCustomNamespace(socketio.Namespace):
 sio.register_namespace(MyCustomNamespace('/test'))
 
 
+@sio.event
+def connect(sid, environ):
+    print("\nconnect sid: ", sid)
+    # print(environ)
+    # username = authenticate_user(environ)
+    username = "shoumitro26"
+    sio.save_session(sid, {'username': username})
+
+
+@sio.event
+def begin_chat(sid, room_id):
+    sio.enter_room(sid, room_id)
+    print("begin_chat room_id: ", room_id)
+
+
+@sio.event
+def message(sid, event_data):
+
+    # connect to the redis queue as an external process
+    external_sio = socketio.RedisManager('redis://', write_only=True)
+    external_sio.emit('my_response', {'data': event_data, 'username': 'sh', 'sio': 'RedisManager'},
+                      room=event_data['room_id'])
+    sio.emit('my_response', {'data': event_data['data']}, room=event_data['room_id'])
+
+
+@sio.event
+def my_event(sid, event_data):
+    """
+    In chat applications it is often desired that an event is broadcasted to all the members
+    of the room except one, which is the originator of the event such as a chat message.
+    The socketio.Server.emit() method provides an optional skip_sid argument to indicate a client
+    that should be skipped during the broadcast.
+    """
+    session = sio.get_session(sid)
+    sio.emit('my_response', {'data': event_data, 'username': session['username']},
+             room=event_data['room_id'], skip_sid=sid)
 
 
 
@@ -82,9 +118,6 @@ sio.register_namespace(MyCustomNamespace('/test'))
 #                  namespace='/test')
 #
 #
-# @sio.event
-# def my_event(sid, event_data):
-#     sio.emit('my_response', {'data': event_data['data']}, room=event_data['room_id'])
 #
 #
 # @sio.event
@@ -126,13 +159,6 @@ sio.register_namespace(MyCustomNamespace('/test'))
 #     print()
 #
 #
-# @sio.event
-# def connect(sid, environ):
-#     print("\nconnect sid: ", sid)
-#     # print(environ)
-#     # username = authenticate_user(environ)
-#     username = "shoumitro26"
-#     sio.save_session(sid, {'username': username})
 #
 #
 # @sio.event
@@ -142,13 +168,6 @@ sio.register_namespace(MyCustomNamespace('/test'))
 #     print()
 #
 #
-# @sio.event
-# def begin_chat(sid, room_id):
-#     sio.enter_room(sid, room_id)
-#     print()
-#     sio.emit('my_response', {'data': 'begin_chat', 'room_id': room_id}, room=room_id)
-#     print("\nbegin_chat sid, room_id: ", sid, room_id)
-#     print()
 #
 #
 # @sio.event
@@ -158,10 +177,6 @@ sio.register_namespace(MyCustomNamespace('/test'))
 #     print()
 #
 #
-# @sio.event
-# def message(sid, data):
-#     session = sio.get_session(sid)
-#     print('message from ', session['username'])
 #
 #
 # @sio.event(namespace='/chat')

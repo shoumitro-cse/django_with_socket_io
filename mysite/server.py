@@ -21,5 +21,5 @@ sio = socketio.Server(
     logger=True,
     async_mode=async_mode,
     client_manager=mgr,
-    engineio_logger=True
+    # engineio_logger=True
 )
